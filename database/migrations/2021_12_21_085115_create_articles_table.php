@@ -19,6 +19,7 @@ class CreateArticlesTable extends Migration
             $table->string('slug')->unique();
             $table->text('body')->unique();
             $table->string('img');
+            $table->timestamp('published_at');
             $table->timestamps();
             // created_at
             // updated_at создаются отдельно

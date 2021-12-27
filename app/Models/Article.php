@@ -6,12 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+
 class Article extends Model
 {
     use HasFactory;
 
     // массив который покажет какие поля должны быть доступны для массового заполнения
     protected $fillable = ['title', 'body', 'img', 'slug'];
+
+    public $dates = ['published_at'];
 
     // массив который покажет какие поля НЕ должны быть доступны для массового заполнения
     // protected $guarded = [];
@@ -44,12 +47,17 @@ class Article extends Model
 
     public function createdAtForHumans()
     {
-        return $this->created_at->diffForHumans();
-//        return $this->published_at->diffForHumans();
+//        return $this->created_at->diffForHumans();
+        return $this->published_at->diffForHumans();
     }
 
     public function scopeLastLimit($query, $limit)
     {
         return $query->with('state', 'tags')->orderBy('created_at', 'desc')->take($limit)->get();
+    }
+
+    public function scopeAllPaginate($query, $limit)
+    {
+        return $query->with('tags', 'state')->orderBy('created_at', 'desc')->paginate($limit);
     }
 }
