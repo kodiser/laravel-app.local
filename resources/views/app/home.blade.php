@@ -7,7 +7,7 @@
 @section('content')
     <div class="row mt-5">
         <?php
-
+        dump('here');
         ?>
         @foreach($articles as $article)
             <div class="col-6 pb-3">
